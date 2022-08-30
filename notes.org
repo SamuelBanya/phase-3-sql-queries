@@ -1,0 +1,63 @@
+These are the SQL commands I used:
+#+begin_src sql
+samuelbanya@Samuels-MBP ~/hub/Development/code/phase-3/phase-3-sql-queries $ sqlite3 pets_database.db
+
+SELECT * FROM cats;
+
+.headers on      # output the name of each column
+.mode column     # now we are in column mode, enabling us to run the next two .width commands
+.width auto      # adjusts and normalizes column width
+# or
+.width NUM1, NUM2 # customize column width
+
+SELECT * FROM cats ORDER BY age;
+
+SELECT * FROM cats ORDER BY age DESC;
+
+SELECT * FROM cats ORDER BY age DESC LIMIT 1;
+
+SELECT * FROM cats ORDER BY age DESC LIMIT 2;
+
+SELECT name FROM cats WHERE age BETWEEN 1 AND 3;
+#+end_src
+
+Here is an example in which we are inserting a new cat into the database that does not have a name, hence the 'NULL' value:
+#+begin_src sql
+INSERT INTO cats (name, age, breed) VALUES (NULL, NULL, "Tabby");
+
+SELECT * FROM cats WHERE name IS NULL;
+#+end_src
+
+Example using 'Count':
+#+begin_src sql
+SELECT COUNT(owner_id) FROM cats WHERE owner_id = 1;
+#+end_src
+
+Example using 'Group By':
+#+begin_src sql
+SELECT breed, COUNT(breed) FROM cats GROUP BY breed;
+
+SELECT breed, owner_id, COUNT(breed) FROM cats GROUP BY breed, owner_id;
+#+end_src
+
+Variants of 'SELECT':
+#+begin_src sql
+SELECT name FROM cats;
+
+SELECT cats.name FROM cats;
+#+end_src
+
+'CREATE TABLE' example:
+#+begin_src sql
+CREATE TABLE dogs (
+  id INTEGER PRIMARY KEY,
+  name TEXT
+);
+
+INSERT INTO dogs (name) VALUES ("Clifford");
+#+end_src
+
+Using 'SELECT" query for multiple tables:
+#+begin_src sql
+SELECT cats.name, dogs.name FROM cats, dogs;
+#+end_src
